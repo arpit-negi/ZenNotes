@@ -19,7 +19,7 @@ const HomePage = () => {
             try {
                 const res = await api.get("/notes");
                 console.log(res.data);
-                setNotes(res.data);
+                setNotes(res.data.notes);
                 setIsRateLimited(false);
             }catch(error){ 
                 console.log("error fetchxing notes");
