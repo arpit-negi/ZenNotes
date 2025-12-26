@@ -19,7 +19,7 @@ const HomePage = () => {
             try {
                 const res = await api.get("/notes");
                 console.log(res.data);
-                setNotes(res.data.notes);
+                setNotes(Array.isArray(res.data.notes) ? res.data.notes : []);
                 setIsRateLimited(false);
             }catch(error){ 
                 console.log("error fetchxing notes");
@@ -48,7 +48,7 @@ const HomePage = () => {
 
          {notes.length === 0 && !isRateLimited && <NotesNotFound/>}
 
-    {notes.length > 0 && !isRateLimited && (
+    {Array.isArray(notes) && notes.length === 0 && !isRateLimited && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} setNotes={setNotes} />
