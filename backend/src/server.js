@@ -19,34 +19,6 @@ app.use(cors({
 }))
 
 }
-if (process.env.NODE_ENV === "production") {
-
-  // ✅ FORCE OVERRIDE CSP (THIS FIXES THE ERROR)
-  app.use((req, res, next) => {
-    res.setHeader(
-      "Content-Security-Policy",
-      [
-        "default-src 'self'",
-        "script-src 'self'",
-        "style-src 'self' 'unsafe-inline'",
-        "font-src 'self' data:",
-        "img-src 'self' data:",
-        "connect-src 'self'"
-      ].join("; ")
-    );
-    next();
-  });
-
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../frontend", "dist", "index.html")
-    );
-  });
-}
-
-
 
 app.use(express.json())
 app.use(rateLimiter)
